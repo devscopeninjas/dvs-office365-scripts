@@ -97,11 +97,11 @@ $tenantSites | ForEach-Object {
     Disconnect-PnPOnline
 }
 ## Workaround to get latest storage quota ###Connect-PnPOnline -url $tenantUrl -Credential $psCredGet-PnPTenantSite -IncludeOneDriveSites | ForEach-Object {
-    $currentUrl = $_.Ur
+    $currentUrl = $_.Url
     $finalStorageUsage = $_.StorageUsage
     $afterSizeUsage = $_.StorageUsage + $afterSizeUsage
 
-    $exportInfo | where-object { $_.SiteCollection -eq $_.currentUrl } | select-object{ $_.FinalStorageUsage = $finalStorageUsage }
+    $exportInfo | where-object { $_.SiteCollection -eq $currentUrl } | ForEach-Object { $_.FinalStorageUsage = $finalStorageUsage } 
 }
 
 
